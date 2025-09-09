@@ -3,9 +3,8 @@ const { ModuleFederationPlugin } = require("webpack").container;
 const path = require("path");
 
 module.exports = (env, argv) => {
-  const isProd = argv.mode === 'production';
   return {
-    mode: isProd ? 'production' : 'development',
+    mode: 'production',
     entry: "./src/index.js",
     output: {
       path: path.resolve(__dirname, 'dist'),
