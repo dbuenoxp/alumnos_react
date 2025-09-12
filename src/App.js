@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import PruebaButton from "./ui/PruebaButton";
-
+import { gtagEvent } from "./utils/analytics";
 // Modal para agregar/editar
 function Modal({ isOpen, onClose, onSave, alumno }) {
   const [form, setForm] = useState({ nombre: "", apellido: "", fecha: "", curso: "" });
@@ -139,18 +139,28 @@ export default function App() {
   const handleSave = (alumno) => {
     setAlumnos((prev) => {
       const exists = prev.find((a) => a.id === alumno.id);
-      if (exists) return prev.map((a) => (a.id === alumno.id ? alumno : a));
+      if (exists) {
+        gtagEvent("editar_alumno", { nombre: alumno.nombre, curso: alumno.curso });
+        return prev.map((a) => (a.id === alumno.id ? alumno : a));
+      }
+      gtagEvent("agregar_alumno", { nombre: alumno.nombre, curso: alumno.curso });
       return [...prev, alumno];
     });
   };
 
-  const handleDelete = (id) => setAlumnos(alumnos.filter((a) => a.id !== id));
+  // const handleDelete = (id) => setAlumnos(alumnos.filter((a) => a.id !== id));
+  const handleDelete = (id) => {
+    const alumno = alumnos.find((a) => a.id === id);
+    gtagEvent("eliminar_alumno", { nombre: alumno?.nombre, curso: alumno?.curso });
+    setAlumnos(alumnos.filter((a) => a.id !== id));
+  };
 
   const filtered = alumnos.filter((a) =>
     a.nombre.toLowerCase().includes(filtro.toLowerCase())
   );
 
   const handleExport = () => {
+     gtagEvent("exportar_lista", { total: alumnos.length });
     const csv = [
       ["Nombre", "Apellido", "Fecha de Nacimiento", "Curso"],
       ...alumnos.map((a) => [a.nombre, a.apellido, a.fecha, a.curso]),
