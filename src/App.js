@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from "react";
+import PruebaButton from "./ui/PruebaButton";
 
 // Modal para agregar/editar
 function Modal({ isOpen, onClose, onSave, alumno }) {
@@ -215,6 +217,12 @@ export default function App() {
   </div>
 </div>
 
+      {/* Botón de prueba reutilizable */}
+      <div style={{ marginBottom: 24 }}>
+        <PruebaButton primary onClick={() => alert('¡Botón Prueba clickeado!')}>
+          Prueba
+        </PruebaButton>
+      </div>
       {/* Card de lista */}
       <div
         style={{
