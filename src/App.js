@@ -146,6 +146,17 @@ export default function App() {
       gtagEvent("agregar_alumno", { nombre: alumno.nombre, curso: alumno.curso });
       return [...prev, alumno];
     });
+
+     try {
+         fetch("http://localhost:5678/webhook/new-register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(alumno),
+        });
+        console.log("Alumno enviado a n8n:", alumno);
+      } catch (error) {
+        console.error("Error enviando a n8n:", error);
+      }
   };
 
   // const handleDelete = (id) => setAlumnos(alumnos.filter((a) => a.id !== id));
@@ -227,12 +238,6 @@ export default function App() {
   </div>
 </div>
 
-      {/* Botón de prueba reutilizable */}
-      <div style={{ marginBottom: 24 }}>
-        <PruebaButton primary onClick={() => alert('¡Botón Prueba clickeado!')}>
-          Prueba
-        </PruebaButton>
-      </div>
       {/* Card de lista */}
       <div
         style={{
