@@ -264,65 +264,32 @@ export default function App() {
           overflowX: "auto",
         }}
       >
-        <div
+        <table
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
             width: "100%",
-            minWidth: 0,
+            minWidth: "600px",
+            borderCollapse: "collapse",
+            color: "#fff",
+            fontSize: "1rem",
           }}
         >
-          <div
-            style={{
-              display: "none",
-              marginBottom: "1rem",
-            }}
-            className="responsive-table-labels"
-          ></div>
-          {/* Responsive table: scroll on mobile, flex on desktop */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-              width: "100%",
-            }}
-          >
-            {/* Header row */}
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                borderBottom: "1px solid #38bdf8",
-                fontWeight: "bold",
-                color: "#38bdf8",
-                padding: "8px 0",
-              }}
-            >
-              <div style={{ flex: 1, minWidth: 120, padding: 8 }}>Nombre</div>
-              <div style={{ flex: 1, minWidth: 120, padding: 8 }}>Apellido</div>
-              <div style={{ flex: 1, minWidth: 120, padding: 8 }}>Fecha Nac.</div>
-              <div style={{ flex: 1, minWidth: 120, padding: 8 }}>Curso</div>
-              <div style={{ minWidth: 120, padding: 8, textAlign: "center" }}>Acciones</div>
-            </div>
-            {/* Data rows */}
+          <thead>
+            <tr>
+              <th style={{ borderBottom: "1px solid #38bdf8", padding: 8, textAlign: "left", background: "#0f172a", color: "#38bdf8" }}>Nombre</th>
+              <th style={{ borderBottom: "1px solid #38bdf8", padding: 8, textAlign: "left", background: "#0f172a", color: "#38bdf8" }}>Apellido</th>
+              <th style={{ borderBottom: "1px solid #38bdf8", padding: 8, textAlign: "left", background: "#0f172a", color: "#38bdf8" }}>Fecha Nac.</th>
+              <th style={{ borderBottom: "1px solid #38bdf8", padding: 8, textAlign: "left", background: "#0f172a", color: "#38bdf8" }}>Curso</th>
+              <th style={{ borderBottom: "1px solid #38bdf8", padding: 8, background: "#0f172a", color: "#38bdf8" }}>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
             {filtered.map((a) => (
-              <div
-                key={a.id}
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  borderBottom: "1px solid rgba(255,255,255,0.1)",
-                  alignItems: "center",
-                  padding: "8px 0",
-                }}
-              >
-                <div style={{ flex: 1, minWidth: 120, padding: 8 }}>{a.nombre}</div>
-                <div style={{ flex: 1, minWidth: 120, padding: 8 }}>{a.apellido}</div>
-                <div style={{ flex: 1, minWidth: 120, padding: 8 }}>{a.fecha}</div>
-                <div style={{ flex: 1, minWidth: 120, padding: 8 }}>{a.curso}</div>
-                <div style={{ minWidth: 120, padding: 8, display: "flex", gap: 8, justifyContent: "center" }}>
+              <tr key={a.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+                <td style={{ padding: 8 }}>{a.nombre}</td>
+                <td style={{ padding: 8 }}>{a.apellido}</td>
+                <td style={{ padding: 8 }}>{a.fecha}</td>
+                <td style={{ padding: 8 }}>{a.curso}</td>
+                <td style={{ padding: 8, display: "flex", gap: 8 }}>
                   <button
                     onClick={() => {
                       setEditAlumno(a);
@@ -354,16 +321,18 @@ export default function App() {
                   >
                     Eliminar
                   </button>
-                </div>
-              </div>
+                </td>
+              </tr>
             ))}
             {filtered.length === 0 && (
-              <div style={{ textAlign: "center", padding: 12, color: "#94a3b8" }}>
-                No hay alumnos
-              </div>
+              <tr>
+                <td colSpan={5} style={{ textAlign: "center", padding: 12, color: "#94a3b8" }}>
+                  No hay alumnos
+                </td>
+              </tr>
             )}
-          </div>
-        </div>
+          </tbody>
+        </table>
       </div>
 
       <Modal
